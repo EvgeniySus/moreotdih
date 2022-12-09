@@ -4,7 +4,7 @@
 
         <div class="flex-center position-ref full-height">
             <div class="content">
-                <logo></logo>
+
 
                 {{ Config::get('site.META')  }}
             </div>

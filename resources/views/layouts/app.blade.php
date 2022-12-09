@@ -17,15 +17,22 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+<div class="wrapper index_page" id="app">
+    <header class="block-header">
+        <logo></logo>
+        <topmenu></topmenu>
+        <topcontact></topcontact>
+    </header>
+    <main class="block-main">
+        <div class="block-search-form"></div>
+        @yield('content')
 
-        <main class="py-4">
-{{--            @include('component.alert')--}}
+    </main>
+    <aside class="block-right"></aside>
 
-            @yield('content')
+<footer class="block-footer"></footer>
 
-        </main>
-    </div>
+</div>
     <script src="{{ asset('js/index.js') }}" defer></script>
 </body>
 </html>

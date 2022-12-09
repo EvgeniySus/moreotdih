@@ -13,7 +13,14 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .vue()
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .copy('resources/assets/image/*.*', 'public/assets/image')
+    .copy('resources/assets/font/*.*', 'public/assets/font')
+    .copy('resources/assets/favicon/*.*', 'public/assets/favicon');
 
-mix.js('resources/views/index.js', 'public/js')
+
+mix.js('resources/views/index.js', 'public/js');
+
+
+
 

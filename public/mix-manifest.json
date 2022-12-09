@@ -1,5 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/index.js": "/js/index.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/assets/image/photo_2020-04-06_18-47-02.jpg": "/assets/image/photo_2020-04-06_18-47-02.jpg",
+    "/assets/image/logo-globus.webp": "/assets/image/logo-globus.webp",
+    "/assets/image/logo-globe.png": "/assets/image/logo-globe.png"
 }
