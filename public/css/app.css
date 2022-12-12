@@ -13,12 +13,17 @@ body {
   overflow-x: hidden;
   font: 100% sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: #E3E3E3;
+  color: #1a1a1a;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font: 100% sans-serif;
   margin: 0;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 120%;
 }
 
 .wrapper {
@@ -45,13 +50,6 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
 }
 
-.block-search-form {
-  height: 70px;
-  border: 1px solid #002d86;
-  border-radius: 5px;
-  margin: 5px;
-}
-
 .block-main {
   height: 100%;
   padding: 10px;
@@ -64,4 +62,16 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
   background-color: #969696;
+}
+
+.block-search-form {
+  padding: 10px;
+  border: 1px solid #002d86;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.block-search-form h1 {
+  margin: 10px 0;
+  color: #002d86;
 }

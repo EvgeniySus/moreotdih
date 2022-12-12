@@ -24,7 +24,10 @@
         <topcontact></topcontact>
     </header>
     <main class="block-main">
-        <div class="block-search-form"></div>
+        <div class="block-search-form">
+        <h1>Забронируйте отель по выгодной цене</h1>
+            <Search_form_top></Search_form_top>
+        </div>
         @yield('content')
 
     </main>
