@@ -11,7 +11,7 @@ Vue.component('logo', require('./components/logo').default);
 Vue.component('topmenu', require('./components/topmenu/topmenu').default);
 Vue.component('topcontact', require('./components/topcontact').default);
 Vue.component('search_form_top', require('./components/search_form/search_form_top').default);
-
+Vue.component('error_alert', require('./components/error_alert').default);
 
 Vue.use(ElementUI);
 locale.use(lang);
