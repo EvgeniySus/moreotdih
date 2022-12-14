@@ -11,10 +11,12 @@
     &__text {
         max-width: $min-width-site;
         margin: 20px auto;
-        color: #002d86;
+        color: #FFFFFF;
+        padding-left: 20px;
+        text-shadow: 1px 0 5px #777;
 
         h1 {
-            color: #002d86;
+            color: #FFFFFF;
             font-size: 20px;
             margin-bottom: 20px;
         }

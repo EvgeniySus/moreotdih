@@ -97,10 +97,12 @@ main {
 .index-head-bg__text {
   max-width: 1220px;
   margin: 20px auto;
-  color: #002d86;
+  color: #FFFFFF;
+  padding-left: 20px;
+  text-shadow: 1px 0 5px #777;
 }
 .index-head-bg__text h1 {
-  color: #002d86;
+  color: #FFFFFF;
   font-size: 20px;
   margin-bottom: 20px;
 }
@@ -160,8 +162,8 @@ main {
 
 .block-search-form {
   padding: 10px;
-  border: 1px solid #002d86;
-  border-radius: 5px;
+  box-shadow: 0 4px 16px rgba(75, 106, 166, 0.16);
+  border-radius: 6px;
   margin: 5px;
 }
 

@@ -1,7 +1,7 @@
 .block-search-form {
     padding: 10px;
-    border: 1px solid $color-header;
-    border-radius: 5px;
+    box-shadow: 0 4px 16px rgba(75, 106, 166, 0.16);
+    border-radius: 6px;
     margin: $block-margin-tb;
 }
 .block-search-form h1 {
