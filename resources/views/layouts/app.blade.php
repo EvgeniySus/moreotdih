@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title> {{ Config::get('site.META')  }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -16,21 +16,16 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="{{$page_modifay}}">
 <div class="wrapper index_page" id="app">
     <header class="block-header">
         <logo></logo>
         <topmenu></topmenu>
         <topcontact></topcontact>
     </header>
-    <main class="block-main">
-        <div class="block-search-form">
-        <h1>Забронируйте отель по выгодной цене</h1>
-            <Search_form_top></Search_form_top>
-        </div>
-        @yield('content')
 
-    </main>
+
+        @yield('content')
     <aside class="block-right"></aside>
 
 <footer class="block-footer"></footer>

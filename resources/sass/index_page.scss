@@ -1,0 +1,27 @@
+
+
+.index-head-bg {
+    width: 100%;
+    background: url("../assets/image/head_index.jpg") center;
+    background-size: cover;
+    height: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+
+    &__text {
+        max-width: $min-width-site;
+        margin: 20px auto;
+        color: #002d86;
+
+        h1 {
+            color: #002d86;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+    }
+
+
+}
+
+

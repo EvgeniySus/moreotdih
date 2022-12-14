@@ -1,6 +1,7 @@
 @import "config";
 @import "global";
-@import "page-index";
+@import "index_page";
+@import "../views/components/carusel";
 
 // Компоненты
 @import "../js/components/search_form/index";

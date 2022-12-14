@@ -1,0 +1,65 @@
+.carusel {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+
+    .carusel-list {
+        display: flex;
+        padding: 0;
+
+        h3 {
+            color: #409eff;
+        }
+
+        &__item {
+            list-style: none;
+            min-width: 250px;
+            max-width: 300px;
+            height: 250px;
+            margin-right: 20px;
+            box-shadow: 0 4px 16px rgba(75,106,166,.16);
+            border-radius: 8px;
+            overflow: hidden;
+
+            &__img {
+                height: 120px;
+                background-size: cover!important;
+                background-position: center top!important;
+                position: relative;
+
+            }
+            &__prise {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                display: inline;
+                right: 0;
+                padding: 5px;
+                background-color: #FFF;
+                border-radius: 5px 0 0 0;
+                color: #f00;
+                font-weight: bold;
+                border-bottom: 1px solid #f00;
+            }
+
+            &__text {
+                padding: 10px;
+                height: 90px;
+                overflow: hidden;
+                p {
+                    font-size: 90%;
+                }
+
+            }
+
+
+
+        }
+
+        &__item:last-child {
+            margin-right: 0;
+        }
+
+    }
+
+}

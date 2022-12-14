@@ -10,9 +10,9 @@ class HomePageController extends Controller
 
     public function index()
     {
-
+        $page_modifay = "index_page";
        // dd(SiteOptions::META_TITLE);
-        return view("welcome");
+        return view("index", compact('page_modifay'));
     }
 
 }

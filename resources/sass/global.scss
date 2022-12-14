@@ -16,7 +16,7 @@ body {
     font: 16px sans-serif;
     -webkit-font-smoothing: antialiased;
     color: $color-black;
-
+    background-color: $color-all-bg;
 }
 
 
@@ -31,15 +31,41 @@ h1 {
     font-size: 120%;
 }
 
+h2 {
+    font-size: 110%;
+}
+
 .wrapper {
     width: 100%;
     margin: 0 auto;
-    max-width: 1870px;
+    max-width: $max-width-site;
     min-height: 100vh;
     background-color: $color-wrapper-bg;
     border-radius: 5px;
     position: relative;
 
+}
+
+main {
+    width: 100%;
+    margin: 0 auto;
+    max-width: $min-width-site;
+}
+
+.section-item {
+    margin-top:20px;
+}
+
+
+.block-search {
+    width: 100%;
+    max-width: $min-width-site;
+    margin: 0 auto;
+    margin-top: -50px;
+
+}
+.block-search .block-search-form {
+    background-color: #FFFFFF;
 }
 
 .block-right {

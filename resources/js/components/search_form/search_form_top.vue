@@ -234,6 +234,7 @@ export default {
         font-size: 100%;
         color: #409EFF;
         padding-bottom: 5px;
+        font-weight: bold;
     }
 
     &__item {

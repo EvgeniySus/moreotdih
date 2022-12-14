@@ -1,8 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/index.js": "/js/index.js",
-    "/css/app.css": "/css/app.css",
+    "/assets/image/head_index.jpg": "/assets/image/head_index.jpg",
     "/assets/image/logo-globe.png": "/assets/image/logo-globe.png",
     "/assets/image/logo-globus.webp": "/assets/image/logo-globus.webp",
-    "/assets/image/photo_2020-04-06_18-47-02.jpg": "/assets/image/photo_2020-04-06_18-47-02.jpg"
+    "/assets/image/photo_2020-04-06_18-47-02.jpg": "/assets/image/photo_2020-04-06_18-47-02.jpg",
+    "/images/tmp/hotel1.jpg": "/images/tmp/hotel1.jpg",
+    "/images/tmp/hotel2.jpg": "/images/tmp/hotel2.jpg",
+    "/css/app.css": "/css/app.css"
 }
