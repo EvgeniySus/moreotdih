@@ -23,8 +23,14 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font: 100% sans-serif;
-    margin: 0;
     font-weight: bold;
+    margin: 10px 0  20px;
+    color: $color-header;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: $text-color;
 }
 
 h1 {
@@ -33,6 +39,7 @@ h1 {
 
 h2 {
     font-size: 110%;
+
 }
 
 .wrapper {
@@ -54,6 +61,21 @@ main {
 
 .section-item {
     margin-top:20px;
+
+    &:after {
+        content: "";
+        height: 10px;
+        width: 100%;
+        background: url("../assets/image/hr.webp") center no-repeat;
+        background-size: 50%;
+        margin: 30px 0;
+        display: block;
+    }
+
+    &:first-child:after, &:last-child:after {
+        background: none;
+    }
+
 }
 
 
@@ -91,6 +113,45 @@ main {
 .block-footer {
     width: 100%;
     padding: $padding-main-block;
+    background-color: $color-header;
+    color: $color-white;
+    display: flex;
+
+
+    &-corp {
+        font-size: 90%;
+        width: 80%;
+    }
+
+    &-menu {
+        ul {margin: 0;}
+        font-size: 90%;
+    }
+
 }
 
+@media (max-width: $mobil-size) {
+
+    .block-footer-corp {
+        width: 100%;
+    }
+
+}
+
+.but {
+    padding: 15px;
+    background-color: $color-bg-blu-light;
+    color: $color-bg-blu;
+    border: 0;
+    border-radius: 30%;
+    font-weight: bold;
+
+    &:hover, &:focus,  {
+
+        background-color: $color-bg-blu;
+        color: $color-bg-blu-light;
+    }
+
+
+}
 

@@ -4,7 +4,8 @@
 
 <div class="search-form-top">
 
-    <div class="search-form-top__item search-form-top--inpregion">
+    <div class="search-form-top__item search-form-top--inpregion" v-if="select_region">
+
         <label>Регион</label><br>
         <el-autocomplete
             class="inline-input"
@@ -14,8 +15,13 @@
             disableMobile="true"
             @select="handleSelect"
             @change="handleChange"
-
         ></el-autocomplete>
+    </div>
+
+    <div class="search-form-top__item search-form-top--inpregion" v-if="!select_region">
+        <label>Отель</label><br>
+        <el-input :placeholder="hotel[1]" :disabled="true"></el-input>
+        <input type="hidden" name="hotelid" :value="hotelid">
     </div>
 
 <div class="search-form-top__item search-form-top--date-picker">
@@ -27,7 +33,6 @@
             range-separator="-"
             start-placeholder="Начало"
             end-placeholder="Конец"
-            clearable="true"
             format="dd/MM/yyyy"
             align="center"
             @change="ChangeRange"
@@ -41,7 +46,8 @@
 
     <div class="search-form-top__item search-form-top--button">
         <label></label><br>
-        <el-button type="primary" @click="SubmitForm()" plain>Найти Отель</el-button>
+        <el-button type="primary" @click="SubmitForm()" plain v-if="select_region">Найти Отель</el-button>
+        <el-button type="primary" @click="SubmitFormHotel()" plain v-else>Проверить наличее мест</el-button>
     </div>
 
 </div>
@@ -60,15 +66,14 @@
 import error_alert from "../error_alert";
 
 
-import axios from "axios";
 export default {
     name: "search_form_top",
     props:{
         hotel: [],
+        searchparam: [],
     },
     component: {
         error_alert
-
     },
     data() {
         return {
@@ -81,6 +86,10 @@ export default {
             error: false,
             error_msg: "",
             loading: true,
+            hotelid: "",
+
+            select_region: true,// Флаг выбора региона, или отель известен
+
         }
     },
 
@@ -133,6 +142,16 @@ export default {
                 let url=`/search/rangestart/${this.range[0]}/rangeend/${this.range[1]}/guest/${this.num}/regionid/${this.region_id}/regionname/${this.region_name}`;
                  window.location = url;
             }
+
+        },
+
+
+        SubmitFormHotel(){
+            let sercharr = [];
+             sercharr['id']=this.hotelid;
+             sercharr['datas']=this.range;
+             sercharr['numguest']=this.num;
+             this.$root.$emit('prisesearch', sercharr);
 
         },
 
@@ -191,7 +210,10 @@ export default {
 
 
     mounted() {
-        let url="http://moreotdih-ru/api/region/all";
+        if(!Array.isArray(this.hotel) || !this.hotel[1])
+        { // Проверяем пришлии данные об отеле или нет
+
+        let url="https://moreotdih-ru/api/region/all";
         axios.get(url)
             .then(res => {
                 console.log('OK!!!');
@@ -204,6 +226,14 @@ export default {
                 this.links = [{ "value": "К сожалению выбор региона не работает", "link": [0,0,0] }];
                 console.log('ERROR список Регионов!!!');
             });
+
+        }
+        else {
+            this.hotelid = this.hotel[0];
+            this.servdata = this.hotel[2];
+            this.select_region = false;
+            this.loading = false;
+        }
 
     }
 
@@ -250,7 +280,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(129, 126, 126, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
     top: 0;
     z-index: 1000;
     border-radius: 5px;

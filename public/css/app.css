@@ -19,8 +19,14 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font: 100% sans-serif;
-  margin: 0;
   font-weight: bold;
+  margin: 10px 0 20px;
+  color: #002d86;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: #262626;
 }
 
 h1 {
@@ -49,6 +55,18 @@ main {
 
 .section-item {
   margin-top: 20px;
+}
+.section-item:after {
+  content: "";
+  height: 10px;
+  width: 100%;
+  background: url(/images/hr.webp?8dc44d5bf63c053d766459a2b799a0b7) center no-repeat;
+  background-size: 50%;
+  margin: 30px 0;
+  display: block;
+}
+.section-item:first-child:after, .section-item:last-child:after {
+  background: none;
 }
 
 .block-search {
@@ -84,6 +102,37 @@ main {
 .block-footer {
   width: 100%;
   padding: 10px;
+  background-color: #002d86;
+  color: #d6d6d6;
+  display: flex;
+}
+.block-footer-corp {
+  font-size: 90%;
+  width: 80%;
+}
+.block-footer-menu {
+  font-size: 90%;
+}
+.block-footer-menu ul {
+  margin: 0;
+}
+
+@media (max-width: 500px) {
+  .block-footer-corp {
+    width: 100%;
+  }
+}
+.but {
+  padding: 15px;
+  background-color: #b0d4ff;
+  color: #409EFF;
+  border: 0;
+  border-radius: 30%;
+  font-weight: bold;
+}
+.but:hover, .but:focus {
+  background-color: #409EFF;
+  color: #b0d4ff;
 }
 
 .index-head-bg {
@@ -110,6 +159,7 @@ main {
 .carusel {
   width: 100%;
   overflow: hidden;
+  position: relative;
   padding: 0;
 }
 .carusel .carusel-list {
@@ -118,22 +168,37 @@ main {
 }
 .carusel .carusel-list h3 {
   color: #409eff;
+  margin-bottom: 10px;
+}
+.carusel .carusel-list address {
+  color: #002d86;
+  font-weight: bold;
+  font-size: 90%;
 }
 .carusel .carusel-list__item {
   list-style: none;
-  min-width: 250px;
-  max-width: 300px;
-  height: 250px;
+  min-width: 200px;
+  width: 20%;
+  height: 300px;
   margin-right: 20px;
+  margin-bottom: 12px;
   box-shadow: 0 4px 16px rgba(75, 106, 166, 0.16);
   border-radius: 8px;
   overflow: hidden;
 }
 .carusel .carusel-list__item__img {
+  display: block;
   height: 120px;
   background-size: cover !important;
   background-position: center top !important;
   position: relative;
+}
+.carusel .carusel-list__item__type {
+  display: inline;
+  background-color: #002d86;
+  color: #FFF;
+  padding: 4px;
+  border-radius: 0 0 5px;
 }
 .carusel .carusel-list__item__prise {
   position: absolute;
@@ -150,14 +215,52 @@ main {
 }
 .carusel .carusel-list__item__text {
   padding: 10px;
-  height: 90px;
+  height: 142px;
   overflow: hidden;
 }
 .carusel .carusel-list__item__text p {
   font-size: 90%;
 }
+.carusel .carusel-list__item:focus, .carusel .carusel-list__item:hover {
+  box-shadow: 0 4px 16px rgb(181, 79, 79);
+}
 .carusel .carusel-list__item:last-child {
   margin-right: 0;
+}
+
+.section-item-slider {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+.section-item-slider .carusel-navigation {
+  width: 100%;
+  position: absolute;
+  top: 45%;
+  display: flex;
+  justify-content: space-between;
+}
+.section-item-slider .carusel-navigation .carusel-but {
+  background-color: transparent;
+  box-shadow: 0 4px 16px rgba(75, 106, 166, 0.16);
+}
+.section-item-slider .carusel-navigation .carusel-but:hover {
+  background-color: #409EFF;
+  color: #b0d4ff;
+}
+.section-item-slider .carusel-navigation .carusel-but-prev {
+  margin-left: -20px;
+}
+.section-item-slider .carusel-navigation .carusel-but-next {
+  margin-right: -20px;
+}
+@media (max-width: 1220px) {
+  .section-item-slider .carusel-navigation .carusel-but-prev {
+    margin-left: 0px;
+  }
+  .section-item-slider .carusel-navigation .carusel-but-next {
+    margin-right: 15px;
+  }
 }
 
 .block-search-form {

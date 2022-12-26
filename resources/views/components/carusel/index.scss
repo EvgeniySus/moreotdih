@@ -1,6 +1,7 @@
 .carusel {
     width: 100%;
     overflow: hidden;
+    position: relative;
     padding: 0;
 
     .carusel-list {
@@ -9,25 +10,45 @@
 
         h3 {
             color: #409eff;
+            margin-bottom: 10px;
+
+
+        }
+
+        address {
+            color: $color-header;
+            font-weight: bold;
+            font-size: 90%;
         }
 
         &__item {
             list-style: none;
-            min-width: 250px;
-            max-width: 300px;
-            height: 250px;
+            min-width: 200px;
+            width: 20%;
+            height: 300px;
             margin-right: 20px;
+            margin-bottom: 12px;
             box-shadow: 0 4px 16px rgba(75,106,166,.16);
             border-radius: 8px;
             overflow: hidden;
 
             &__img {
+                display: block;
                 height: 120px;
                 background-size: cover!important;
                 background-position: center top!important;
                 position: relative;
 
             }
+            &__type {
+            display: inline;
+            background-color: #002d86;
+            color: #FFF;
+            padding: 4px;
+            border-radius: 0 0 5px;
+            }
+
+
             &__prise {
                 position: absolute;
                 right: 0;
@@ -44,15 +65,18 @@
 
             &__text {
                 padding: 10px;
-                height: 90px;
+                height: 142px;
                 overflow: hidden;
                 p {
                     font-size: 90%;
+
                 }
 
             }
 
-
+        &:focus, &:hover {
+            box-shadow: 0 4px 16px rgb(181, 79, 79);
+        }
 
         }
 
@@ -62,4 +86,55 @@
 
     }
 
+
+
+}
+
+.section-item-slider {
+
+    width: 100%;
+    overflow: visible;
+    position: relative;
+
+    .carusel-navigation {
+        width: 100%;
+        position: absolute;
+        top: 45%;
+        display: flex;
+        justify-content: space-between;
+
+
+        .carusel-but {
+            background-color: transparent;
+            box-shadow: 0 4px 16px rgba(75,106,166,.16);
+
+            &:hover {
+                background-color: $color-bg-blu;
+                color: $color-bg-blu-light
+            }
+        }
+
+        .carusel-but-prev
+        {
+            margin-left: -20px;
+        }
+        .carusel-but-next
+        {
+            margin-right: -20px;
+        }
+
+        @media (max-width: $min-width-site) {
+            .carusel-but-prev
+            {
+                margin-left: 0px;
+            }
+            .carusel-but-next
+            {
+                margin-right: 15px;
+            }
+        }
+
+
+
+    }
 }
