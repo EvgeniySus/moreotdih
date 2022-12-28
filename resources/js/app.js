@@ -20,7 +20,7 @@ Vue.component('error_alert', require('./components/error_alert').default);
 Vue.component('slaider_hotel', require('./components/slider_hotel/slaider_hotel').default);
 Vue.component('slaider_hotel', require('./components/slider_hotel/slaider_hotel').default);
 Vue.component('item_slider_card', require('./components/library/hotel/item_slider_card').default);
-Vue.component('hotelprice', require('./components/hotel_price/hotelprice').default);
+Vue.component('hotelprice', require('./components/library/hotel/hotelprice').default);
 
 
 Vue.use(ElementUI);

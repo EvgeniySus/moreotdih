@@ -40,10 +40,13 @@ export default {
         serchprise(){
             this.error=false;
             this.error_msg ="";
+
+
+
             if(this.hotelid != 0 && this.numguest>0)
             {
                 this.loading=true;
-                let url = `https://moreotdih-ru/api/prise/dstart/${this.datastart}/dend/${this.dataend}/numguest/${this.numguest}/hotelid/${this.hotelid}`;
+                let url = `https://moreotdih-ru/api/site/holel/prise/dstart/${this.datastart}/dend/${this.dataend}/numguest/${this.numguest}/hotelid/${this.hotelid}`;
                 axios.get(url)
                     .then(res => {
                         console.log('OK!!!');
