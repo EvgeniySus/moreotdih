@@ -21,7 +21,8 @@ Vue.component('slaider_hotel', require('./components/slider_hotel/slaider_hotel'
 Vue.component('slaider_hotel', require('./components/slider_hotel/slaider_hotel').default);
 Vue.component('item_slider_card', require('./components/library/hotel/item_slider_card').default);
 Vue.component('hotelprice', require('./components/library/hotel/hotelprice').default);
-
+Vue.component('hotel_item_rooms', require('./components/library/hotel/hotel_item_rooms').default);
+Vue.component('servises_hotel', require('./components/library/hotel/servises').default);
 
 Vue.use(ElementUI);
 locale.use(lang);

@@ -35,7 +35,7 @@
                     </div>
                 </section>
 <section class="hotel-prise">
-    <hotelprice></hotelprice>
+    <hotelprice :hotelid="{{$view->hotel->id}}"></hotelprice>
 
 </section>
 
@@ -44,7 +44,10 @@
 
            <section role="hotel-services">
                <h2>Услуги и удобстава отеля</h2>
-               {{$view->hotel->services}}
+
+               <servises_hotel :sevise_list="{{$view->hotel->services}}" :groupservise="{{$view->groupservise}}" key="serv_hotel_page">
+
+               </servises_hotel>
 
            </section>
 

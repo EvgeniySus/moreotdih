@@ -19,10 +19,12 @@ class View extends SiteOptions
     public $discription;
     public $title_page;
     public $page_modifay;
-    public $hotel;
+
     public $doc;
     public $listrazdel;
 
+    public $hotel;
+    public $groupservise;
 
     private $docrepo;
     private $hotelrepo;
@@ -41,6 +43,8 @@ class View extends SiteOptions
         $this->metatitle = $this::META_TITLE_PREFIX." ".$this::META_TITLE;
         $this->keywords = $this::META_KEYWORDS;
         $this->discription = $this::META_DESCRIPTION;
+
+
     }
 
 
@@ -60,7 +64,7 @@ class View extends SiteOptions
                 $this->metatitle = $this::META_TITLE_PREFIX.' '.$hotel->metatitle;
             }
 
-
+            $this->groupservise = json_encode($this::GroupServices(), JSON_FORCE_OBJECT); // Получение групп для сервисов отеля.
             $this->hotel =  $hotel;
         }
 

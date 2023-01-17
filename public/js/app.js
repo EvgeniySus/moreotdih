@@ -3842,10 +3842,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hotel_price/hotelprice.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hotel_price/hotelprice.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3853,51 +3853,177 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _error_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../error_alert */ "./resources/js/components/error_alert.vue");
+/* harmony import */ var _servises_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./servises.vue */ "./resources/js/components/library/hotel/servises.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "hotel_item_rooms",
+  components: {
+    servises: _servises_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ["item", "GroupServices"],
+  data: function data() {
+    return {
+      selected: 0,
+      servise: {}
+    };
+  },
+  methods: {
+    onchangeCol: function onchangeCol() {
+      this.item.selcol = this.selected;
+      if (this.selected == 0) {
+        this.$emit('delItemRoom', this.item);
+      } else {
+        this.$emit('saveItemRoom', this.item);
+      }
+    }
+  },
+  computed: {
+    prise: function prise() {
+      if (this.item.sumpris) this.itemprise = this.item.sumprise;
+      return this.itemprise;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotelprice.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotelprice.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _error_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../error_alert */ "./resources/js/components/error_alert.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "hotelprice",
+  props: {
+    hotelid: 0
+  },
   component: {
     error_alert: _error_alert__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      pricelist: {},
+      list: {},
       servdata: "",
       datastart: "",
       dataend: "",
-      numguest: 0,
-      hotelid: 0,
+      numguest: "",
+      numday: "",
       flagprice: false,
-      error: false,
-      error_msg: "",
-      loading: false
+      // ПОказывать прайс или нет
+      loading: false,
+      // Предзагрузчик
+
+      select_room: {
+        hotel: {
+          id: this.hotelid,
+          title: "",
+          adres: "",
+          datastart: this.datastart,
+          dataend: this.dataend,
+          countday: this.numday,
+          countpeple: this.numguest
+        },
+        room: [],
+        itogo: 0,
+        guest: {
+          email: "",
+          lastname: "",
+          firstname: "",
+          tel: "",
+          guest_id: false,
+          nosendemail: false
+        }
+      },
+      errors: false,
+      // Блок ошибки
+      errors_msg: ""
     };
   },
   methods: {
-    serchprise: function serchprise() {
+    serchprise: function serchprise(url) {
       var _this = this;
-      this.error = false;
-      this.error_msg = "";
-      if (this.hotelid != 0 && this.numguest > 0) {
+      this.data = {};
+      this.flagprice = false;
+      this.errors = false;
+      this.errors_msg = "";
+      if (this.hotelid != 0) {
         this.loading = true;
-        var url = "https://moreotdih-ru/api/prise/dstart/".concat(this.datastart, "/dend/").concat(this.dataend, "/numguest/").concat(this.numguest, "/hotelid/").concat(this.hotelid);
-        axios.get(url).then(function (res) {
-          console.log('OK!!!');
+        var d_start = this.datastart == "" ? "" : "/".concat(this.datastart);
+        var d_end = this.dataend == "" ? "" : "/".concat(this.dataend);
+        var nghost = this.numguest == "" ? "" : "/".concat(this.numguest);
+        var _url = "https://moreotdih-ru/api/site/holel/prise/".concat(this.hotelid).concat(nghost).concat(d_start).concat(d_end);
+        axios.get(_url).then(function (res) {
           console.log(res.data); // Результат ответа от сервера
-          _this.servdata = res.data.time;
+          console.log('OK!!!');
+          _this.servdata = res.data.servdata;
+          _this.list = res.data;
+          _this.flagprice = true;
           _this.loading = false;
+          _this.datastart = res.data.datastart;
+          _this.numday = res.data.differenceday.num;
         })["catch"](function (error) {
-          _this.error = true;
-          _this.error_msg = "Ошибка сервера, не удалось получить доступные номера, попробуйте позже.";
+          console.log(error);
+          _this.errors = true;
+          _this.errors_msg = "Ошибка сервера, не удалось получить доступные номера, попробуйте позже.";
           console.log('ERROR Запрос прайса!!!');
         });
         this.flagprice = true;
       } else {
-        this.error = true;
-        this.error_msg = "Что то пошло не так, вы не заполнили один из необходимых параметров.";
+        this.errors = true;
+        this.errors_msg = "Что то пошло не так, вы не заполнили один из необходимых параметров.";
       }
+    },
+    //Запись выбранного номера в корзину или изменение числа номеров в корзине если они там есть.
+    save_room: function save_room(data) {
+      if (this.select_room.room.length) {
+        var issetroom = true;
+        this.select_room.room.map(function (item) {
+          if (item.id == data.id) {
+            item.selcol = data.selcol;
+            issetroom = false;
+          }
+        });
+        if (issetroom == true) {
+          this.select_room.room.push(data);
+        }
+      } else {
+        this.select_room.room.push(data);
+      }
+      this.itogo();
+    },
+    // Удаление из корзины номера (когда выбрали 0 номеров)
+    delItemRoom: function delItemRoom(data) {
+      var delindez = "del";
+      this.select_room.room.map(function (item, index) {
+        if (item.id == data.id) {
+          delindez = index;
+        }
+      });
+      if (delindez != "del") {
+        this.select_room.room.splice(delindez, 1);
+      }
+      this.itogo();
+    },
+    // Подсчет общей суммы заказа и вывод
+    itogo: function itogo() {
+      var sum = 0;
+      this.select_room.room.map(function (item) {
+        sum = sum + item.sumprise * item.selcol;
+        console.log(sum);
+      });
+      this.select_room.itogo = sum;
     }
+  },
+  mounted: function mounted() {
+    if (this.hotelid != 0) this.serchprise();
   },
   created: function created() {
     this.$root.$on('prisesearch', function (sercharr) {
@@ -3951,6 +4077,25 @@ __webpack_require__.r(__webpack_exports__);
       window.addEventListener('resize', this.test);
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/servises.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/servises.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "servises",
+  props: ["sevise_list", "groupservise"],
+  computed: {}
 });
 
 /***/ }),
@@ -4254,10 +4399,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hotel_price/hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true&":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hotel_price/hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4269,9 +4414,89 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm._v("\n    Прайс лист."), _c("br"), _vm._v("\n " + _vm._s(_vm.datastart) + "\n\n    "), _vm.flagprice ? _c("div", {
+  return _c("tr", [_c("td", {
+    staticClass: "hotel-item-rooms-list_item__title",
+    staticStyle: {
+      padding: "5px"
+    }
+  }, [_c("h4", [_vm._v(_vm._s(_vm.item.title))]), _vm._v(" "), _c("p", [_vm._v("Основных мест: "), _c("b", [_vm._v(_vm._s(_vm.item.osnPlace))])]), _vm._v(" "), _c("p", [_vm._v("Дополнительных мест: "), _c("b", [_vm._v(_vm._s(_vm.item.dopPlace))])])]), _vm._v(" "), _c("td", [_c("label", [_vm._v("Выберите количество номеров:")]), _vm._v(" "), _vm.item.counts ? _c("p", [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.selected,
+      expression: "selected"
+    }],
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, _vm.onchangeCol]
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "0"
+    }
+  }, [_vm._v("0")]), _vm._v(" "), _vm._l(_vm.item.counts, function (n) {
+    return _c("option", {
+      domProps: {
+        value: n
+      }
+    }, [_vm._v(_vm._s(n))]);
+  })], 2), _c("br")]) : _c("p", [_vm._v("0")])]), _vm._v(" "), _c("td", [_vm.item.counts ? _c("p", [_vm._v(_vm._s(_vm.item.sumprise) + "р. ")]) : _vm._e()]), _vm._v(" "), _c("td", [_vm.selected > 0 ? _c("span", [_vm._v(" x " + _vm._s(_vm.selected))]) : _vm._e()]), _vm._v(" "), _c("td", [_c("p", [_c("b", [_vm._v("Количество комнат:")]), _vm._v(" " + _vm._s(_vm.item.numroom))]), _vm._v(" "), _c("p", [_c("b", [_vm._v("Размер номера:")]), _vm._v(" " + _vm._s(_vm.item.numroom) + " кв.м.")]), _vm._v(" "), _c("p", [_c("b", [_vm._v("Услуги:")]), _vm._v(" "), _c("servises", {
+    attrs: {
+      sevise_list: _vm.item.services,
+      groupservise: _vm.GroupServices
+    }
+  })], 1), _vm._v(" "), _c("p", [_c("b", [_vm._v("Описание номера:")]), _vm._v(" " + _vm._s(_vm.item.about))]), _vm._v(" "), _vm._m(0)])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", [_c("b", [_vm._v("Подробней")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("hr"), _vm._v(" "), _vm.list.differenceday.num ? _c("div", {
     staticClass: "prise-list"
-  }) : _vm._e(), _vm._v(" "), _vm.error ? _c("error_alert", [_vm._v(_vm._s(_vm.error_msg))]) : _vm._e()], 1);
+  }, [_c("div", {
+    staticClass: "hotelprise--infoblock"
+  }, [_vm._v("\n    Наличие мест с " + _vm._s(_vm.list.datastart) + " по " + _vm._s(_vm.list.dataend) + "  (" + _vm._s(_vm.list.differenceday.num) + " " + _vm._s(_vm.list.differenceday.text) + ") для " + _vm._s(_vm.list.numguest.num) + " " + _vm._s(_vm.list.numguest.text) + "\n")]), _vm._v(" "), _vm._l(_vm.list.rooms_prise, function (item) {
+    return _vm.list.rooms_prise.length ? _c("hotel_item_rooms", {
+      key: item.id,
+      staticClass: "hotel-item-rooms-list_ittem",
+      attrs: {
+        item: item,
+        GroupServices: _vm.list.groupservices
+      },
+      on: {
+        saveItemRoom: _vm.save_room,
+        delItemRoom: _vm.delItemRoom
+      }
+    }) : _vm._e();
+  })], 2) : _vm._e(), _vm._v(" "), _vm.errors ? _c("error_alert", [_vm._v(_vm._s(_vm.errors_msg))]) : _vm._e()], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4318,6 +4543,37 @@ var render = function render() {
       target: "_blank"
     }
   }, [_c("h3", [_vm._v(_vm._s(_vm.item.title))]), _vm._v(" "), _c("address", [_vm._v(_vm._s(_vm.item.adres))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.item.anons))])])])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/servises.vue?vue&type=template&id=8096a870&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/servises.vue?vue&type=template&id=8096a870&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", _vm._l(_vm.sevise_list, function (servis, index) {
+    return _c("ul", [_vm.groupservise[index] ? _c("li", {
+      staticStyle: {
+        "list-style-type": "none"
+      }
+    }, [_c("b", [_vm._v(_vm._s(_vm.groupservise[index]))])]) : _vm._e(), _vm._v(" "), _vm._l(servis, function (item_servis) {
+      return _c("li", [_vm._v("\n            " + _vm._s(item_servis[0]) + "\n        ")]);
+    })], 2);
+  }), 0);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4645,7 +4901,9 @@ vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('error_alert', (__webpack_
 vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('slaider_hotel', (__webpack_require__(/*! ./components/slider_hotel/slaider_hotel */ "./resources/js/components/slider_hotel/slaider_hotel.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('slaider_hotel', (__webpack_require__(/*! ./components/slider_hotel/slaider_hotel */ "./resources/js/components/slider_hotel/slaider_hotel.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('item_slider_card', (__webpack_require__(/*! ./components/library/hotel/item_slider_card */ "./resources/js/components/library/hotel/item_slider_card.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('hotelprice', (__webpack_require__(/*! ./components/hotel_price/hotelprice */ "./resources/js/components/hotel_price/hotelprice.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('hotelprice', (__webpack_require__(/*! ./components/library/hotel/hotelprice */ "./resources/js/components/library/hotel/hotelprice.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('hotel_item_rooms', (__webpack_require__(/*! ./components/library/hotel/hotel_item_rooms */ "./resources/js/components/library/hotel/hotel_item_rooms.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('servises_hotel', (__webpack_require__(/*! ./components/library/hotel/servises */ "./resources/js/components/library/hotel/servises.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_4__["default"].use((element_ui__WEBPACK_IMPORTED_MODULE_0___default()));
 element_ui_lib_locale__WEBPACK_IMPORTED_MODULE_2__["default"].use(element_ui_lib_locale_lang_ru_RU__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var app = new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
@@ -65643,6 +65901,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.error_msg[data-v-58aaa0ea] {\r\n   
 
 /***/ }),
 
+/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js */ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.hotel-item-rooms-list_ittem[data-v-5e974b11] {\n    border: 1px solid #000;\n    padding: 10px;\n}\n.hotel-item-rooms-list_ittem td[data-v-5e974b11] {padding: 10px; border: 1px solid #000;}\n.hotel-item-rooms-list_ittem .ps[data-v-5e974b11] {font-size: 11px;}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js":
 /*!******************************************************************************!*\
   !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js ***!
@@ -84928,6 +85210,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_style_index_0_id_5e974b11_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css& */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_style_index_0_id_5e974b11_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_style_index_0_id_5e974b11_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -85397,10 +85709,10 @@ component.options.__file = "resources/js/components/error_alert.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/hotel_price/hotelprice.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/hotel_price/hotelprice.vue ***!
-  \************************************************************/
+/***/ "./resources/js/components/library/hotel/hotel_item_rooms.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotel_item_rooms.vue ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -85408,9 +85720,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _hotelprice_vue_vue_type_template_id_c6fcfe5e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true& */ "./resources/js/components/hotel_price/hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true&");
-/* harmony import */ var _hotelprice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hotelprice.vue?vue&type=script&lang=js& */ "./resources/js/components/hotel_price/hotelprice.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _hotel_item_rooms_vue_vue_type_template_id_5e974b11_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true& */ "./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true&");
+/* harmony import */ var _hotel_item_rooms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hotel_item_rooms.vue?vue&type=script&lang=js& */ "./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=script&lang=js&");
+/* harmony import */ var _hotel_item_rooms_vue_vue_type_style_index_0_id_5e974b11_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css& */ "./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _hotel_item_rooms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _hotel_item_rooms_vue_vue_type_template_id_5e974b11_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _hotel_item_rooms_vue_vue_type_template_id_5e974b11_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "5e974b11",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/library/hotel/hotel_item_rooms.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/hotelprice.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotelprice.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _hotelprice_vue_vue_type_template_id_1ce42b6f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true& */ "./resources/js/components/library/hotel/hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true&");
+/* harmony import */ var _hotelprice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hotelprice.vue?vue&type=script&lang=js& */ "./resources/js/components/library/hotel/hotelprice.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -85420,18 +85773,18 @@ __webpack_require__.r(__webpack_exports__);
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _hotelprice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _hotelprice_vue_vue_type_template_id_c6fcfe5e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _hotelprice_vue_vue_type_template_id_c6fcfe5e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _hotelprice_vue_vue_type_template_id_1ce42b6f_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _hotelprice_vue_vue_type_template_id_1ce42b6f_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  "c6fcfe5e",
+  "1ce42b6f",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/hotel_price/hotelprice.vue"
+component.options.__file = "resources/js/components/library/hotel/hotelprice.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -85471,6 +85824,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/library/hotel/item_slider_card.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/servises.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/library/hotel/servises.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _servises_vue_vue_type_template_id_8096a870_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./servises.vue?vue&type=template&id=8096a870&scoped=true& */ "./resources/js/components/library/hotel/servises.vue?vue&type=template&id=8096a870&scoped=true&");
+/* harmony import */ var _servises_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./servises.vue?vue&type=script&lang=js& */ "./resources/js/components/library/hotel/servises.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _servises_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _servises_vue_vue_type_template_id_8096a870_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _servises_vue_vue_type_template_id_8096a870_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "8096a870",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/library/hotel/servises.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -85694,10 +86086,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/hotel_price/hotelprice.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/hotel_price/hotelprice.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -85705,7 +86097,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotelprice.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hotel_price/hotelprice.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotel_item_rooms.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/hotelprice.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotelprice.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotelprice.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotelprice.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
@@ -85723,6 +86131,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_item_slider_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./item_slider_card.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/item_slider_card.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_item_slider_card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/servises.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/servises.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_servises_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./servises.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/servises.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_servises_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -85823,19 +86247,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/hotel_price/hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/hotel_price/hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true& ***!
-  \*******************************************************************************************************/
+/***/ "./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true& ***!
+  \***************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_template_id_c6fcfe5e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_template_id_c6fcfe5e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_template_id_5e974b11_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_template_id_5e974b11_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_template_id_c6fcfe5e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hotel_price/hotelprice.vue?vue&type=template&id=c6fcfe5e&scoped=true&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_template_id_5e974b11_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=template&id=5e974b11&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_template_id_1ce42b6f_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_template_id_1ce42b6f_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotelprice_vue_vue_type_template_id_1ce42b6f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotelprice.vue?vue&type=template&id=1ce42b6f&scoped=true&");
 
 
 /***/ }),
@@ -85853,6 +86294,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_item_slider_card_vue_vue_type_template_id_0fc97048_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_item_slider_card_vue_vue_type_template_id_0fc97048_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./item_slider_card.vue?vue&type=template&id=0fc97048&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/item_slider_card.vue?vue&type=template&id=0fc97048&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/servises.vue?vue&type=template&id=8096a870&scoped=true&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/servises.vue?vue&type=template&id=8096a870&scoped=true& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_servises_vue_vue_type_template_id_8096a870_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_servises_vue_vue_type_template_id_8096a870_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_servises_vue_vue_type_template_id_8096a870_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./servises.vue?vue&type=template&id=8096a870&scoped=true& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/servises.vue?vue&type=template&id=8096a870&scoped=true&");
 
 
 /***/ }),
@@ -86003,6 +86461,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_error_alert_vue_vue_type_style_index_0_id_58aaa0ea_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./error_alert.vue?vue&type=style&index=0&id=58aaa0ea&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/error_alert.vue?vue&type=style&index=0&id=58aaa0ea&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************!*\
+  !*** ./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_hotel_item_rooms_vue_vue_type_style_index_0_id_5e974b11_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/library/hotel/hotel_item_rooms.vue?vue&type=style&index=0&id=5e974b11&scoped=true&lang=css&");
 
 
 /***/ }),
